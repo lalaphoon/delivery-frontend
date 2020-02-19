@@ -85,6 +85,11 @@ class NormalLoginForm extends React.Component {
                 </Form.Item>
                 <Form.Item>
                     <div>
+                        <Link to="/confirmation">Confirmation</Link>
+                    </div>
+                </Form.Item>
+                <Form.Item>
+                    <div>
                         <Link to="/track">Track</Link>
                     </div>
                 </Form.Item>
