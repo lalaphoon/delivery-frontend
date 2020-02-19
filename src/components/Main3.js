@@ -48,6 +48,8 @@ export function Main3() {
             </Content>
             <Footer style={{ textAlign: 'center' }}>Delivery - FLAGCamp</Footer>
         </Layout>
+		
+		
     );
 }
 
