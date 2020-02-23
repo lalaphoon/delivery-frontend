@@ -11,7 +11,7 @@ import {Layout,
     InputNumber,
     Form} from 'antd';
 import {OrderDetails} from "./OrderDetail"
-
+import { withRouter } from 'react-router-dom';
 
 class Main1StartingForm extends React.Component {
     state = {
@@ -19,6 +19,11 @@ class Main1StartingForm extends React.Component {
             value: 11,
         },
     };
+
+    goToNextPage = () => {
+        console.log('clicked');
+        this.props.history.push('/main2');
+    }
 
 
     render() {
@@ -35,7 +40,7 @@ class Main1StartingForm extends React.Component {
                         <MapTest/>
                     </Content>
                     <Sider width={'45%'} style={{ background: '#fff' }}>
-                        <OrderDetails/>
+                        <OrderDetails cb={this.goToNextPage}/>
                     </Sider>
                 </Layout>
             </Content>
@@ -44,4 +49,4 @@ class Main1StartingForm extends React.Component {
         );
     }
 }
-export const Main1 = Form.create({ name: 'main1' })(Main1StartingForm);
+export const Main1 = withRouter( Form.create({ name: 'main1' })(Main1StartingForm));

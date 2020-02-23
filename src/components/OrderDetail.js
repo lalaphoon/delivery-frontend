@@ -47,18 +47,6 @@ class OrderDetailsForm extends React.Component {
         const totalWeight_tips =
             'Total weight range is from 1 to 40';
 
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 },
-            },
-            marginRight: 200
-        };
-
         return (
             <div>
                 <div className="orderdetails-header">
@@ -67,8 +55,7 @@ class OrderDetailsForm extends React.Component {
 
                 <Form className="orderdetails-form" onSubmit={this.handleSubmit}>
                     <Form.Item
-                        {...formItemLayout}
-                        label="total weight "
+                        label="Total weight"
                         validateStatus={number.validateStatus}
                         help={number.errorMsg || totalWeight_tips}
                     >
@@ -85,7 +72,7 @@ class OrderDetailsForm extends React.Component {
                         })(<Input />)}
                     </Form.Item>
                 </Form>
-                <Button className="main1-button">Next</Button>
+                <Button className="orderdetails-button" onClick={this.props.cb}>Next</Button>
             </div>
         );
     }
