@@ -21,7 +21,7 @@ class Main1StartingForm extends React.Component {
     };
 
     goToNextPage = () => {
-        console.log('clicked');
+        console.log('clicked next button on main1');
         this.props.history.push('/main2');
     }
 
