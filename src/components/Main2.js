@@ -49,4 +49,4 @@ class Main2Form extends React.Component {
         );
     }
 }
-export const Main2 = withRouter( Form.create({ name: 'main1' })(Main2Form));
+export const Main2 = withRouter( Form.create({ name: 'main2' })(Main2Form));
