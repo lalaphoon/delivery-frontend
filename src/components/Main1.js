@@ -1,7 +1,8 @@
 import React from 'react';
 import '../styles/Main1.css'
 import MapTest from "./MapTest"
-import {Layout,
+import {
+    Layout,
     Menu,
     Breadcrumb,
     PageHeader,
@@ -9,9 +10,11 @@ import {Layout,
     Descriptions,
     Input,
     InputNumber,
-    Form} from 'antd';
+    Form, message
+} from 'antd';
 import {OrderDetails} from "./OrderDetail"
 import { withRouter } from 'react-router-dom';
+import {API_ROOT} from "../constants"
 
 class Main1StartingForm extends React.Component {
     state = {
@@ -23,6 +26,26 @@ class Main1StartingForm extends React.Component {
     goToNextPage = () => {
         console.log('clicked next button on main1');
         this.props.history.push('/main2');
+    }
+
+    componentDidMount() {
+        this.checkAvailability();
+    }
+
+    checkAvailability = () => {
+        fetch(`${API_ROOT}/availability`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => {
+             return response.json();
+        }).then((data) => {
+            console.log(data);
+        }).catch((error) => {
+
+        });
     }
 
 
