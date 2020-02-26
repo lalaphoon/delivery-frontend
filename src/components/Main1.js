@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Main1.css'
-import MapTest from "./MapTest"
+import { Map } from "./Map"
 import {
     Layout,
     Menu,
@@ -21,6 +21,7 @@ class Main1StartingForm extends React.Component {
         number: {
             value: 11,
         },
+        distributionStations : [],
     };
 
     goToNextPage = () => {
@@ -43,6 +44,9 @@ class Main1StartingForm extends React.Component {
              return response.json();
         }).then((data) => {
             console.log(data);
+            this.setState({
+                distributionStations: data ? data : [],
+            });
         }).catch((error) => {
 
         });
@@ -51,7 +55,6 @@ class Main1StartingForm extends React.Component {
 
     render() {
         const { Content, Footer, Sider } = Layout;
-
         return (
         <Layout>
             <Content style={{ padding: '0 50px' }}>
@@ -60,7 +63,7 @@ class Main1StartingForm extends React.Component {
                 </Breadcrumb>
                 <Layout style={{ padding: '24px 0', background: '#fff' }}>
                     <Content style={{padding: '0 24px', minHeight: 500 }}>
-                        <MapTest/>
+                        <Map distributionStations={this.state.distributionStations} />
                     </Content>
                     <Sider width={'45%'} style={{ background: '#fff' }}>
                         <OrderDetails cb={this.goToNextPage}/>
