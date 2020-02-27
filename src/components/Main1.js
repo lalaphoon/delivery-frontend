@@ -15,6 +15,8 @@ import {
 import {OrderDetails} from "./OrderDetail"
 import { withRouter } from 'react-router-dom';
 import {API_ROOT} from "../constants"
+import {connect} from "react-redux";
+
 
 class Main1StartingForm extends React.Component {
     state = {
@@ -47,6 +49,7 @@ class Main1StartingForm extends React.Component {
             this.setState({
                 distributionStations: data ? data : [],
             });
+            this.props.set(data);
         }).catch((error) => {
 
         });
@@ -54,6 +57,12 @@ class Main1StartingForm extends React.Component {
 
 
     render() {
+        //TODO: remove this bloc, This is a piece of code for testing reducer
+        if (this.props.locations) {
+            this.props.locations.map((value) => {
+                console.log(value.station_name);
+            })
+        }
         const { Content, Footer, Sider } = Layout;
         return (
         <Layout>
@@ -75,4 +84,18 @@ class Main1StartingForm extends React.Component {
         );
     }
 }
-export const Main1 = withRouter( Form.create({ name: 'main1' })(Main1StartingForm));
+const Main1 = withRouter( Form.create({ name: 'main1' })(Main1StartingForm));
+
+export default connect(
+    //state
+    ({distributionLocationReducer}) => ({
+       locations: distributionLocationReducer.locations
+    }),
+
+    //action
+    (dispatch) => ({
+        set(items){
+            dispatch({'type' : 'set', 'newDistributionLocation' : items})
+        },
+    })
+)(Main1);

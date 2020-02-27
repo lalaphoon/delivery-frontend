@@ -3,7 +3,7 @@ import '../styles/Main.css'
 import { Register } from "./Register"
 import { Login } from "./Login"
 import { UserStatus } from "./UserStatus"
-import { Main1 } from "./Main1"
+import Main1 from "./Main1"
 import { Main2 } from "./Main2"
 import { Main3 } from "./Main3"
 import { Confirmation } from "./Confirmation"
