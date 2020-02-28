@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Main2.css'
-import MapTest from "./MapTest"
+import { Map } from "./Map"
 import {Layout,
     Menu,
     Breadcrumb,
@@ -28,6 +28,17 @@ class Main2Form extends React.Component {
 
     render() {
         const { Content, Footer, Sider } = Layout;
+        //TODO: removed this coordinates
+        const pathCoordinates = [
+            { lat: 37.7571, lng: -122.4866 },
+            { lat: 37.777630, lng: -122.496440 },
+            { lat: 37.777340, lng: -122.410350 },
+            { lat: 37.792, lng: -122.4052}
+        ];
+        const pathCoordinates2 = [
+            { lat: 37.7571, lng: -122.4866 },
+            { lat: 37.792, lng: -122.4052}
+        ];
 
         return (
             <Layout>
@@ -37,7 +48,7 @@ class Main2Form extends React.Component {
                     </Breadcrumb>
                     <Layout style={{ padding: '24px 0', background: '#fff' }}>
                         <Content style={{padding: '0 24px', minHeight: 500 }}>
-                            <MapTest/>
+                            <Map routes={[pathCoordinates, pathCoordinates2]}/>
                         </Content>
                         <Sider width={'45%'} style={{ background: '#fff' }}>
                             <OrderRoute handleNextBottonCallback={this.goToNextPage}/>
