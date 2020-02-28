@@ -5,24 +5,23 @@ import {connect} from "react-redux"
 
 class OrderRouteForm extends React.Component {
 
-
     render() {
-        console.log(this.props.startingLoc);
+
         return (
             <div>
                 <Descriptions title="Deliver Info" bordered column={1}>
-                    <Descriptions.Item label="Deliver Type">Drone</Descriptions.Item>
-                    <Descriptions.Item label="Available time">2018-04-24 18:00:00</Descriptions.Item>
+                    <Descriptions.Item label="Deliver Type">{this.props.routeInfo && this.props.routeInfo.deliver_type }</Descriptions.Item>
+                    <Descriptions.Item label="Available time">{this.props.routeInfo && this.props.routeInfo.available_time }</Descriptions.Item>
                     <Descriptions.Item label="Usage Time">
-                        2019-04-24 18:00:00
+                        {this.props.routeInfo && this.props.routeInfo.usage_time}
                     </Descriptions.Item>
                     <Descriptions.Item label="Status">
                         <Badge status="processing" text="Running" />
                     </Descriptions.Item>
                     <Descriptions.Item label="starting location">{this.props.startingLoc}</Descriptions.Item>
                     <Descriptions.Item label="ending location">{this.props.destination}</Descriptions.Item>
-                    <Descriptions.Item label="Distance">534.1m</Descriptions.Item>
-                    <Descriptions.Item label="Price">$80.00</Descriptions.Item>
+                    <Descriptions.Item label="Distance">{this.props.routeInfo && this.props.routeInfo.distance}</Descriptions.Item>
+                    <Descriptions.Item label="Price">{this.props.routeInfo && this.props.routeInfo.price}</Descriptions.Item>
                 </Descriptions>
                 <Button type="primary" htmlType="submit" className="next-button" onClick={this.props.handleNextBottonCallback}>
                     Next

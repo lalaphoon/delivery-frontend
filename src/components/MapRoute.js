@@ -4,8 +4,9 @@ import {
     InfoWindow
 } from "react-google-maps";
 import "../styles/MapDistriStatMarker.css"
+import {connect} from "react-redux"
 
-export class MapRoute extends React.Component {
+class MapRoute extends React.Component {
 
     //generate randomized color
     getRandomColor() {
@@ -18,7 +19,7 @@ export class MapRoute extends React.Component {
     }
 
     handleClickEvent() {
-        this.props.clickCallback(this.props.id)
+        this.props.select(this.props.id)
     }
 
     render() {
@@ -45,3 +46,17 @@ export class MapRoute extends React.Component {
         );
     }
 }
+
+export default connect(
+    //state
+    ({routeInfoReducer}) => ({
+        route_id: routeInfoReducer.route_id
+    }),
+
+    //action
+    (dispatch) => ({
+        select(items){
+            dispatch({'type' : 'select', 'selected' : items})
+        },
+    })
+)(MapRoute);

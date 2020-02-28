@@ -13,6 +13,7 @@ import {Layout,
 import OrderRoute from "./OrderRoute"
 import { withRouter } from 'react-router-dom';
 import {API_ROOT} from "../constants"
+import {connect} from "react-redux"
 
 class Main2Form extends React.Component {
     state = {
@@ -33,6 +34,7 @@ class Main2Form extends React.Component {
         this.checkAllocation();
     }
 
+
     checkAllocation = () => {
         fetch(`${API_ROOT}/allocate`, {
             method: 'POST',
@@ -49,6 +51,7 @@ class Main2Form extends React.Component {
                 order_id : data.order_id ? data.order_id : ""
             });
             // this.props.set(data);
+
         }).catch((error) => {
 
         });
@@ -69,6 +72,22 @@ class Main2Form extends React.Component {
         return routelist;
     }
 
+    getRouteInfoById = () => {
+        let routelist = [];
+        if (!this.props.selected_route_id === ""){
+            return this.state.routes[0];
+        }
+        if (this.state.routes != null) {
+            if(this.props.selected_route_id !== "") {
+                routelist = this.state.routes.filter((value) => {
+                    return value.route_id === this.props.selected_route_id
+                })
+            }
+        }
+
+        return routelist[0];
+    }
+
 
     render() {
         const { Content, Footer, Sider } = Layout;
@@ -84,7 +103,7 @@ class Main2Form extends React.Component {
                             <Map routes={this.getRoutes()}/>
                         </Content>
                         <Sider width={'45%'} style={{ background: '#fff' }}>
-                            <OrderRoute  handleNextBottonCallback={this.goToNextPage}/>
+                            <OrderRoute routeInfo={this.getRouteInfoById()}  handleNextBottonCallback={this.goToNextPage}/>
                         </Sider>
                     </Layout>
                 </Content>
@@ -93,4 +112,17 @@ class Main2Form extends React.Component {
         );
     }
 }
-export const Main2 = withRouter( Form.create({ name: 'main2' })(Main2Form));
+
+const Main2 = withRouter( Form.create({ name: 'main2' })(Main2Form));
+
+export default connect(
+    //state
+    ({routeInfoReducer}) => ({
+        selected_route_id: routeInfoReducer.route_id
+    }),
+
+    //action
+    (dispatch) => ({
+
+    })
+)(Main2);

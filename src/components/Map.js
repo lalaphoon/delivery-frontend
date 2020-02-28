@@ -2,14 +2,11 @@ import React from "react";
 import { GoogleMap, withScriptjs, withGoogleMap, Polyline } from "react-google-maps";
 import { GOOGLE_MAP_URL } from "../constants";
 import { MapDistriStatMarker} from "./MapDistriStatMarker";
-import { MapRoute} from "./MapRoute"
+import MapRoute from "./MapRoute"
+import {connect} from "react-redux"
 
 class MapFunc extends React.Component {
 
-
-    handleSelectionCallBack(value) {
-        console.log("this is working " + value)
-    }
 
     render()
     {
@@ -35,7 +32,6 @@ class MapFunc extends React.Component {
                             route = {route.route}
                             id={route.route_id}
                             key={route.route_id}
-                            clickCallback = { this.handleSelectionCallBack}
                         />
                     )) : null
 
