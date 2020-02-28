@@ -17,6 +17,10 @@ export class MapRoute extends React.Component {
         return color;
     }
 
+    handleClickEvent() {
+        this.props.clickCallback(this.props.id)
+    }
+
     render() {
        // const { station_name, robot, station_id, lon, lat, drone } = this.props.locationInfo;
         return (
@@ -26,7 +30,7 @@ export class MapRoute extends React.Component {
                 options={{
                     strokeColor: this.getRandomColor(),
                     strokeOpacity: 0.75,
-                    strokeWeight: 4,
+                    strokeWeight: 6,
                     icons: [
                         {
                             // icon: lineSymbol,
@@ -35,6 +39,7 @@ export class MapRoute extends React.Component {
                         }
                     ]
                 }}
+                onClick={()=>this.handleClickEvent()}
             >
             </Polyline>
         );

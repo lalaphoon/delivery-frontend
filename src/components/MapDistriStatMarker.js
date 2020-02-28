@@ -8,10 +8,10 @@ import "../styles/MapDistriStatMarker.css"
 export class MapDistriStatMarker extends React.Component {
 
     render() {
-        const { station_name, robot, station_id, lon, lat, drone } = this.props.locationInfo;
+        const { station_name, robot, station_id, lng, lat, drone } = this.props.locationInfo;
         return (
             <Marker
-                 position={{ lat: lat, lng: lon}}
+                 position={{ lat: lat, lng: lng}}
             >
                 {(
                             <InfoWindow onCloseClick={this.onToggleOpen}>

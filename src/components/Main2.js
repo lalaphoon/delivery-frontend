@@ -12,12 +12,16 @@ import {Layout,
     Form} from 'antd';
 import OrderRoute from "./OrderRoute"
 import { withRouter } from 'react-router-dom';
+import {API_ROOT} from "../constants"
 
 class Main2Form extends React.Component {
     state = {
         number: {
             value: 11,
         },
+        routes: [],
+        order_id: "",
+        markers:[]
     };
 
     goToNextPage = () => {
@@ -25,20 +29,49 @@ class Main2Form extends React.Component {
         this.props.history.push('/main3');
     }
 
+    componentDidMount() {
+        this.checkAllocation();
+    }
+
+    checkAllocation = () => {
+        fetch(`${API_ROOT}/allocate`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);
+            this.setState({
+                routes: data.routes ? data.routes : [],
+                order_id : data.order_id ? data.order_id : ""
+            });
+            // this.props.set(data);
+        }).catch((error) => {
+
+        });
+    }
+
+    getRoutes = () => {
+        let routelist = [];
+        if (this.state.routes != null) {
+            routelist =  this.state.routes.map( (value) => {
+                return (
+                    {
+                        route_id :  value.route_id,
+                        route : value.route
+                    }
+                )
+            })
+        }
+        return routelist;
+    }
+
 
     render() {
         const { Content, Footer, Sider } = Layout;
-        //TODO: removed this coordinates
-        const pathCoordinates = [
-            { lat: 37.7571, lng: -122.4866 },
-            { lat: 37.777630, lng: -122.496440 },
-            { lat: 37.777340, lng: -122.410350 },
-            { lat: 37.792, lng: -122.4052}
-        ];
-        const pathCoordinates2 = [
-            { lat: 37.7571, lng: -122.4866 },
-            { lat: 37.792, lng: -122.4052}
-        ];
 
         return (
             <Layout>
@@ -48,10 +81,10 @@ class Main2Form extends React.Component {
                     </Breadcrumb>
                     <Layout style={{ padding: '24px 0', background: '#fff' }}>
                         <Content style={{padding: '0 24px', minHeight: 500 }}>
-                            <Map routes={[pathCoordinates, pathCoordinates2]}/>
+                            <Map routes={this.getRoutes()}/>
                         </Content>
                         <Sider width={'45%'} style={{ background: '#fff' }}>
-                            <OrderRoute handleNextBottonCallback={this.goToNextPage}/>
+                            <OrderRoute  handleNextBottonCallback={this.goToNextPage}/>
                         </Sider>
                     </Layout>
                 </Content>

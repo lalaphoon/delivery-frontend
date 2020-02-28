@@ -7,9 +7,12 @@ import { MapRoute} from "./MapRoute"
 class MapFunc extends React.Component {
 
 
+    handleSelectionCallBack(value) {
+        console.log("this is working " + value)
+    }
+
     render()
     {
-
         return (
 
             <GoogleMap
@@ -26,12 +29,13 @@ class MapFunc extends React.Component {
                 }
                 {
 
-                    //[pathCoordinates, pathCoordinates2].map((route, key) => (
                     this.props.routes ?
                         this.props.routes.map((route, key) => (
                         <MapRoute
-                            route = {route}
-                            key={key}
+                            route = {route.route}
+                            id={route.route_id}
+                            key={route.route_id}
+                            clickCallback = { this.handleSelectionCallBack}
                         />
                     )) : null
 
