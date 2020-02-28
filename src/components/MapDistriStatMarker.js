@@ -11,7 +11,7 @@ export class MapDistriStatMarker extends React.Component {
         const { station_name, robot, station_id, lon, lat, drone } = this.props.locationInfo;
         return (
             <Marker
-                 position={{ lat: lat, lng: lon * -1 }}
+                 position={{ lat: lat, lng: lon}}
             >
                 {(
                             <InfoWindow onCloseClick={this.onToggleOpen}>
