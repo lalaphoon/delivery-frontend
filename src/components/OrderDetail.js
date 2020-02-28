@@ -11,6 +11,7 @@ import {
     InputNumber,
     Form
 } from 'antd';
+import {connect} from "react-redux"
 
 function validatePrimeNumber(number) {
     if (number < 40 && number > 1) {
@@ -40,6 +41,14 @@ class OrderDetailsForm extends React.Component {
             },
         });
     };
+
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            this.props.setBothLocation({startingLoc: values.starting_location, destination: values.destination_location});
+        });
+        this.props.cb();
+    }
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -71,10 +80,34 @@ class OrderDetailsForm extends React.Component {
                             rules: [{ required: true, message: 'Please input your ending location!', whitespace: true }],
                         })(<Input />)}
                     </Form.Item>
+                    <Form.Item>
+                        <Button className="orderdetails-button" htmlType="submit">Next</Button>
+                    </Form.Item>
                 </Form>
-                <Button className="orderdetails-button" onClick={this.props.cb}>Next</Button>
+
             </div>
         );
     }
 }
-export const OrderDetails = Form.create({name: 'orderdetails'})(OrderDetailsForm);
+const OrderDetails = Form.create({name: 'orderdetails'})(OrderDetailsForm);
+
+export default connect(
+    //state
+    ({orderReducer}) => ({
+        startingLoc: orderReducer.startingLoc,
+        destination: orderReducer.destination
+    }),
+
+    //action
+    (dispatch) => ({
+        setStartingLoc(loc) {
+            dispatch({'type' : 'setStartLoc', 'startingLoc' : loc})
+        },
+        setDestination(loc) {
+            dispatch({'type' : 'setDestination', 'destination' : loc})
+        },
+        setBothLocation(locs) {
+            dispatch({'type' : 'setBoth', 'bothLocs' : locs})
+        }
+    })
+)(OrderDetails);

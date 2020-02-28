@@ -12,7 +12,7 @@ import {
     InputNumber,
     Form, message
 } from 'antd';
-import {OrderDetails} from "./OrderDetail"
+import OrderDetails from "./OrderDetail"
 import { withRouter } from 'react-router-dom';
 import {API_ROOT} from "../constants"
 import {connect} from "react-redux";

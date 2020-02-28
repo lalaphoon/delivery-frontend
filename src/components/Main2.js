@@ -10,7 +10,7 @@ import {Layout,
     Input,
     InputNumber,
     Form} from 'antd';
-import {OrderRoute} from "./OrderRoute"
+import OrderRoute from "./OrderRoute"
 import { withRouter } from 'react-router-dom';
 
 class Main2Form extends React.Component {
