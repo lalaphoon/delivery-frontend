@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Main3.css'
 import {Layout, Menu, Breadcrumb, PageHeader, Button, Descriptions, Form} from 'antd';
-import MapTest from "./MapTest"
+import { Map } from "./Map"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
@@ -10,6 +10,10 @@ class Main3Form extends React.Component {
     handleConfirmButtonClick = () => {
         console.log('clicked confirm button on main3');
         this.props.history.push('/confirmation');
+    }
+
+    convertRouteArray = () => {
+        return [{route_id : this.props.route_id, route: this.props.route}]
     }
 
     render() {
@@ -49,7 +53,7 @@ class Main3Form extends React.Component {
                             </Menu>
                         </Sider>
                         <Content style={{padding: '0 24px', minHeight: 500}}>
-                            <MapTest/>
+                            <Map routes={this.convertRouteArray()}/>
                         </Content>
                     </Layout>
                 </Content>
@@ -69,7 +73,8 @@ export default connect (
         distance: orderReducer.distance,
         price: orderReducer.price,
         usageTime: orderReducer.usageTime,
-        route: routeInfoReducer.route
+        route: routeInfoReducer.route,
+        route_id : routeInfoReducer.route_id
     }),
 
     (dispatch) => ({

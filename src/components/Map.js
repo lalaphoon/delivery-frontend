@@ -25,9 +25,10 @@ class MapFunc extends React.Component {
                     )) : null
                 }
                 {
+                    //route : array of {route_id, route}
 
                     this.props.routes ?
-                        this.props.routes.map((route, key) => (
+                        this.props.routes.map((route) => (
                         <MapRoute
                             route = {route.route}
                             id={route.route_id}

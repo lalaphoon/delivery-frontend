@@ -19,7 +19,7 @@ class MapRoute extends React.Component {
     }
 
     handleClickEvent() {
-        this.props.select(this.props.id)
+        this.props.setRouteInfo({route_id : this.props.id, route: this.props.route})
     }
 
     render() {
@@ -58,5 +58,15 @@ export default connect(
         select(items){
             dispatch({'type' : 'select', 'selected' : items})
         },
+        setRoute(route) {
+            dispatch({
+                    'type' : 'setRoute', 'selectedRoute' : route
+            })
+        },
+        setRouteInfo(routeInfo) {
+            dispatch({
+                'type' : 'setRouteInfo', 'routeInfo' : routeInfo
+            })
+        }
     })
 )(MapRoute);
