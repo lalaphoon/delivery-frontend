@@ -58,11 +58,12 @@ class Main1StartingForm extends React.Component {
 
     render() {
         //TODO: remove this bloc, This is a piece of code for testing reducer
-        if (this.props.locations) {
-            this.props.locations.map((value) => {
-                console.log(value.station_name);
-            })
-        }
+        // if (this.props.locations) {
+        //     this.props.locations.map((value) => {
+        //         console.log(value.station_name);
+        //     })
+        // }
+
         const { Content, Footer, Sider } = Layout;
         return (
         <Layout>
