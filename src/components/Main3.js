@@ -4,12 +4,26 @@ import {Layout, Menu, Breadcrumb, PageHeader, Button, Descriptions, Form} from '
 import { Map } from "./Map"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
+import {API_ROOT} from "../constants"
 
 class Main3Form extends React.Component {
 
     handleConfirmButtonClick = () => {
         console.log('clicked confirm button on main3');
-        this.props.history.push('/confirmation');
+        fetch(`${API_ROOT}/payment`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => {
+            if (response.ok) {
+                this.props.history.push('/confirmation');
+            }
+           // return response.json();
+        }).catch((error) => {
+
+        });
     }
 
     convertRouteArray = () => {
