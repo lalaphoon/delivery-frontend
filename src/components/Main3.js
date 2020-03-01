@@ -2,7 +2,8 @@ import React from 'react';
 import '../styles/Main3.css'
 import {Layout, Menu, Breadcrumb, PageHeader, Button, Descriptions, Form} from 'antd';
 import MapTest from "./MapTest"
-import {withRouter} from "react-router-dom"
+import { withRouter } from "react-router-dom"
+import { connect } from "react-redux"
 
 class Main3Form extends React.Component {
 
@@ -32,12 +33,12 @@ class Main3Form extends React.Component {
                                     title="Main3"
                                 >
                                     <Descriptions bordered column={1} size="middle">
-                                        <Descriptions.Item label="From">601 36th Ave</Descriptions.Item>
-                                        <Descriptions.Item label="To">1130 Howard St</Descriptions.Item>
-                                        <Descriptions.Item label="Weight">10 lb.</Descriptions.Item>
-                                        <Descriptions.Item label="Distance">6.6 miles</Descriptions.Item>
+                                        <Descriptions.Item label="From">{this.props.startingLoc}</Descriptions.Item>
+                                        <Descriptions.Item label="To">{this.props.destination}</Descriptions.Item>
+                                        <Descriptions.Item label="Weight">{this.props.weight}</Descriptions.Item>
+                                        <Descriptions.Item label="Distance">{this.props.distance}</Descriptions.Item>
                                         <Descriptions.Item label="By">Robot</Descriptions.Item>
-                                        <Descriptions.Item label="Time Required">19 min</Descriptions.Item>
+                                        <Descriptions.Item label="Time Required">{this.props.usageTime}</Descriptions.Item>
                                         <Descriptions.Item label="Tel.">415-234-5678</Descriptions.Item>
                                         <Descriptions.Item label="Price">$80.00</Descriptions.Item>
                                     </Descriptions>
@@ -58,7 +59,23 @@ class Main3Form extends React.Component {
     }
 }
 
-export const Main3 = withRouter( Form.create({ name: 'main3' })(Main3Form));
+const Main3 = withRouter( Form.create({ name: 'main3' })(Main3Form));
+
+export default connect (
+    ({orderReducer, routeInfoReducer }) => ({
+        startingLoc : orderReducer.startingLoc,
+        destination: orderReducer.destination,
+        weight: orderReducer.weight,
+        distance: orderReducer.distance,
+        price: orderReducer.price,
+        usageTime: orderReducer.usageTime,
+        route: routeInfoReducer.route
+    }),
+
+    (dispatch) => ({
+
+    })
+)(Main3);
 
 
 

@@ -5,6 +5,16 @@ import {connect} from "react-redux"
 
 class OrderRouteForm extends React.Component {
 
+    goToNextPage = () => {
+        if (this.props.routeInfo) {
+            this.props.setDistance(this.props.routeInfo.distance);
+            this.props.setPrice(this.props.routeInfo.price);
+            this.props.setUsageTime(this.props.routeInfo.usage_time);
+        }
+
+        this.props.handleNextBottonCallback();
+    }
+
     render() {
 
         return (
@@ -23,7 +33,7 @@ class OrderRouteForm extends React.Component {
                     <Descriptions.Item label="Distance">{this.props.routeInfo && this.props.routeInfo.distance}</Descriptions.Item>
                     <Descriptions.Item label="Price">{this.props.routeInfo && this.props.routeInfo.price}</Descriptions.Item>
                 </Descriptions>
-                <Button type="primary" htmlType="submit" className="next-button" onClick={this.props.handleNextBottonCallback}>
+                <Button type="primary" htmlType="submit" className="next-button" onClick={this.goToNextPage}>
                     Next
                 </Button>
             </div>
@@ -36,11 +46,21 @@ export default connect(
     //state
     ({orderReducer}) => ({
         startingLoc: orderReducer.startingLoc,
-        destination: orderReducer.destination
+        destination: orderReducer.destination,
+        weight: orderReducer.weight
     }),
 
     //action
     (dispatch) => ({
+        setDistance(loc) {
+            dispatch({'type' : 'setDistance', 'distance' : loc})
+        },
+        setPrice(loc) {
+            dispatch({'type' : 'setPrice', 'price' : loc})
+        },
+        setUsageTime(locs) {
+            dispatch({'type' : 'setUsageTime', 'usageTime' : locs})
+        },
     })
 )(OrderRoute);
 

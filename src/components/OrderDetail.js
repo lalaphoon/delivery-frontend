@@ -45,7 +45,7 @@ class OrderDetailsForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            this.props.setBothLocation({startingLoc: values.starting_location, destination: values.destination_location});
+            this.props.setBothLocation({startingLoc: values.starting_location, destination: values.destination_location, weight: this.state.number.value});
         });
         this.props.cb();
     }
@@ -108,6 +108,6 @@ export default connect(
         },
         setBothLocation(locs) {
             dispatch({'type' : 'setBoth', 'bothLocs' : locs})
-        }
+        },
     })
 )(OrderDetails);
