@@ -1,7 +1,8 @@
 import React from "react";
 import { GoogleMap, withScriptjs, withGoogleMap, Polyline } from "react-google-maps";
-import { GOOGLE_MAP_URL } from "../constants";
-import { MapDistriStatMarker} from "./MapDistriStatMarker";
+import { GOOGLE_MAP_URL, CENTER } from "../constants";
+import { MapDistriStatMarker } from "./MapDistriStatMarker";
+import { MapUserMarker } from "./MapUserMarker";
 import MapRoute from "./MapRoute"
 import {connect} from "react-redux"
 
@@ -15,14 +16,24 @@ class MapFunc extends React.Component {
             <GoogleMap
                 defaultZoom={12}
                 defaultCenter={{lat: 37.7749, lng: -122.4194}}>
+                {/*{*/}
+                {/*    this.props.locations ?*/}
+                {/*    this.props.locations.map((ds) => (*/}
+                {/*        <MapDistriStatMarker*/}
+                {/*            locationInfo = {ds}*/}
+                {/*            key={ds.station_id}*/}
+                {/*        />*/}
+                {/*    )) : null*/}
+                {/*}*/}
                 {
                     this.props.locations ?
-                    this.props.locations.map((ds) => (
-                        <MapDistriStatMarker
-                            locationInfo = {ds}
-                            key={ds.station_id}
-                        />
-                    )) : null
+                        this.props.locations.map((marker) => (
+                            <MapUserMarker
+                                markerInfo = {marker}
+                                key={marker.label}
+                            />
+
+                        )) : null
                 }
                 {
                     //route : array of {route_id, route}
@@ -42,7 +53,7 @@ class MapFunc extends React.Component {
     }
 }
 
-const WrappedMap = withScriptjs(withGoogleMap(MapFunc));
+const WrappedMap = withGoogleMap(MapFunc);
 
 export class Map extends React.Component{
 
