@@ -16,18 +16,18 @@ class MapFunc extends React.Component {
             <GoogleMap
                 defaultZoom={12}
                 defaultCenter={{lat: 37.7749, lng: -122.4194}}>
-                {/*{*/}
-                {/*    this.props.locations ?*/}
-                {/*    this.props.locations.map((ds) => (*/}
-                {/*        <MapDistriStatMarker*/}
-                {/*            locationInfo = {ds}*/}
-                {/*            key={ds.station_id}*/}
-                {/*        />*/}
-                {/*    )) : null*/}
-                {/*}*/}
                 {
                     this.props.locations ?
-                        this.props.locations.map((marker) => (
+                    this.props.locations.map((ds) => (
+                        <MapDistriStatMarker
+                            locationInfo = {ds}
+                            key={ds.station_id}
+                        />
+                    )) : null
+                }
+                {
+                    this.props.userSelection ?
+                        this.props.userSelection.map((marker) => (
                             <MapUserMarker
                                 markerInfo = {marker}
                                 key={marker.label}
@@ -67,6 +67,7 @@ export class Map extends React.Component{
                     loadingElement={<div style={{height: "100%"}}/>}
                     containerElement={<div style={{height: "100%"}}/>}
                     mapElement={<div style={{height: "100%"}}/>}
+                    userSelection={this.props.userMarkers ? this.props.userMarkers : null}
                     locations={this.props.markers ? this.props.markers : null}
                     routes={this.props.routes ? this.props.routes : null}
                     />

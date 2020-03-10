@@ -81,8 +81,7 @@ class Main1StartingForm extends React.Component {
                 </Breadcrumb>
                 <Layout style={{ padding: '24px 0', background: '#fff' }}>
                     <Content style={{padding: '0 24px', minHeight: 500 }}>
-                        {/*<Map markers={this.state.distributionStations} />*/}
-                         <Map markers={this.state.markers}/>
+                         <Map markers={this.state.distributionStations} userMarkers={this.state.markers}/>
                     </Content>
                     <Sider width={500} style={{ background: '#fff' }}>
                         <OrderDetails collectMarker={this.markerCallback} cb={this.goToNextPage}/>
