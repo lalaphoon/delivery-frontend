@@ -12,78 +12,108 @@ import {
     Form
 } from 'antd';
 import {connect} from "react-redux"
+import SearchBar from "./SearchBar"
 
-function validatePrimeNumber(number) {
-    if (number < 40 && number > 1) {
-        return {
-            validateStatus: 'success',
-            errorMsg: null,
-        };
-    }
-    return {
-        validateStatus: 'error',
-        errorMsg: 'The range must be 1 to 40!',
-    };
-}
-
+/* global google */
 class OrderDetailsForm extends React.Component {
     state = {
-        number: {
-            value: 11,
-        },
+        weight: null,
+        markers: [],
     };
 
-    handleNumberChange = value => {
-        this.setState({
-            number: {
-                ...validatePrimeNumber(value),
-                value,
-            },
-        });
-    };
+    Geocoder = new google.maps.Geocoder();
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            this.props.setBothLocation({startingLoc: values.starting_location, destination: values.destination_location, weight: this.state.number.value});
-        });
         this.props.cb();
     }
 
+    handleWeight = (e) => {
+        // this.setState({Weight: e.target.value});
+        this.props.setWeight(e.target.value);
+    }
+
+    handleSelectPlace = (place_id, label) => {
+        this.Geocoder.geocode({placeId: place_id},results => {
+            const marker = {
+                lat: results[0].geometry.location.lat(),
+                lng: results[0].geometry.location.lng(),
+                label: label
+            };
+            console.log(marker);
+            console.log(this.props.markers);
+            // this.setState({
+            //     markers: [ ...this.state.markers, marker ]
+            // })
+            let tmpMarker;
+            if (this.props.markers) {
+                tmpMarker = this.props.markers;
+                for (var i = 0; i < tmpMarker.length; i++) {
+                    if (tmpMarker[i].label === marker.label) {
+                        tmpMarker.splice(i, 1);
+                    }
+                }
+                tmpMarker.push(marker);
+                this.handleSearchValueChanged(results[0].formatted_address, tmpMarker , label);
+            } else {
+                tmpMarker = [];
+                tmpMarker.push(marker);
+                this.handleSearchValueChanged(results[0].formatted_address, tmpMarker , label);
+            }
+
+            this.props.collectMarker(tmpMarker);
+        });
+    }
+
+    handleSearchValueChanged = (v, markers ,label) => {
+        if (label === 'From') {
+            console.log("from " + v);
+            this.props.setStartingLoc({startingLoc: v, markers: markers});
+        } else {
+            console.log("to " + v);
+            this.props.setDestination({destination: v, markers: markers});
+        }
+
+    }
+
     render() {
-        const { getFieldDecorator } = this.props.form;
-        const { number } = this.state;
-        const totalWeight_tips =
-            'Total weight range is from 1 to 40';
 
         return (
             <div>
                 <div className="orderdetails-header">
                     Where do you want to deliver you objects?
                 </div>
-
-                <Form className="orderdetails-form" onSubmit={this.handleSubmit}>
-                    <Form.Item
-                        label="Total weight"
-                        validateStatus={number.validateStatus}
-                        help={number.errorMsg || totalWeight_tips}
+                <Menu
+                    style={{ height: '100%' }}
+                >
+                    <PageHeader
+                        ghost={false}
+                        onBack={() => window.history.back()}
+                        title="Delivery Information"
                     >
-                        <InputNumber min={8} max={12} value={number.value} onChange={this.handleNumberChange} />
-                    </Form.Item>
-                    <Form.Item label="Starting Location">
-                        {getFieldDecorator('starting_location', {
-                            rules: [{ required: true, message: 'Please input your starting location!', whitespace: true }],
-                        })(<Input />)}
-                    </Form.Item>
-                    <Form.Item label="Destination Location">
-                        {getFieldDecorator('destination_location', {
-                            rules: [{ required: true, message: 'Please input your ending location!', whitespace: true }],
-                        })(<Input />)}
-                    </Form.Item>
-                    <Form.Item>
-                        <Button className="orderdetails-button" htmlType="submit">Next</Button>
-                    </Form.Item>
-                </Form>
+                        <div className="from-to-form">
+                            <SearchBar valueCallBack={this.handleSearchValueChangedFrom} handleSelectPlace={this.handleSelectPlace} placeHolder="From"/>
+                            <SearchBar valueCallBack={this.handleSearchValueChangedTo} handleSelectPlace={this.handleSelectPlace} placeHolder="To"/>
+                            <Input
+                                size="large"
+                                placeholder="Weight"
+                                addonAfter="lbs"
+                                type="number"
+                                min="0"
+                                onChange={this.handleWeight}
+                                className="from-to-input"
+                            />
+                            <Button
+                                size="large"
+                                type="primary"
+                                htmlType="submit"
+                                className="main1-confirm-button"
+                                onClick={this.handleSubmit}>
+                                Confirm
+                            </Button>
+                        </div>
+                    </PageHeader>
+                </Menu>
 
             </div>
         );
@@ -95,7 +125,8 @@ export default connect(
     //state
     ({orderReducer}) => ({
         startingLoc: orderReducer.startingLoc,
-        destination: orderReducer.destination
+        destination: orderReducer.destination,
+        markers: orderReducer.markers,
     }),
 
     //action
@@ -105,6 +136,12 @@ export default connect(
         },
         setDestination(loc) {
             dispatch({'type' : 'setDestination', 'destination' : loc})
+        },
+        setMarkers(markers) {
+            dispatch({'type' : 'setMarkers', 'markers' : markers})
+        },
+        setWeight(weight) {
+            dispatch({'type' : 'setWeight', 'weight': weight})
         },
         setBothLocation(locs) {
             dispatch({'type' : 'setBoth', 'bothLocs' : locs})

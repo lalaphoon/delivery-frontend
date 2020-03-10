@@ -29,36 +29,6 @@ class Main1StartingForm extends React.Component {
         distributionStations : [],
     };
 
-    Geocoder = new google.maps.Geocoder();
-
-    handleSelectPlace = (place_id, label) => {
-        this.Geocoder.geocode({placeId: place_id},results => {
-            const marker = {
-                lat: results[0].geometry.location.lat(),
-                lng: results[0].geometry.location.lng(),
-                label: label
-            };
-            console.log(marker);
-            console.log(this.state.markers);
-            // this.setState({
-            //     markers: [ ...this.state.markers, marker ]
-            // })
-            const tmpMarker = this.state.markers;
-            for( var i = 0; i < tmpMarker.length; i++) {
-                if ( tmpMarker[i].label === marker.label) {
-                    tmpMarker.splice(i, 1);
-                }
-            }
-            tmpMarker.push(marker);
-            this.setState({markers: tmpMarker});
-        });
-    }
-
-    handleWeight = (e) => {
-        this.setState({Weight: e.target.value});
-    }
-
-
     goToNextPage = () => {
         console.log('clicked next button on main1');
         this.props.history.push('/main2');
@@ -68,6 +38,9 @@ class Main1StartingForm extends React.Component {
         this.checkAvailability();
     }
 
+    markerCallback = (m) => {
+        this.setState({markers: m});
+    }
 
 
     checkAvailability = () => {
@@ -111,40 +84,8 @@ class Main1StartingForm extends React.Component {
                         {/*<Map markers={this.state.distributionStations} />*/}
                          <Map markers={this.state.markers}/>
                     </Content>
-                    {/*<Sider width={'45%'} style={{ background: '#fff' }}>*/}
-                    {/*    <OrderDetails cb={this.goToNextPage}/>*/}
-                    {/*</Sider>*/}
                     <Sider width={500} style={{ background: '#fff' }}>
-                        <Menu
-                            style={{ height: '100%' }}
-                        >
-                            <PageHeader
-                                ghost={false}
-                                onBack={() => window.history.back()}
-                                title="Delivery Information"
-                            >
-                                <div className="from-to-form">
-                                    <SearchBar handleSelectPlace={this.handleSelectPlace} placeHolder="From"/>
-                                    <SearchBar handleSelectPlace={this.handleSelectPlace} placeHolder="To"/>
-                                    <Input
-                                        size="large"
-                                        placeholder="Weight"
-                                        addonAfter="lbs"
-                                        type="number"
-                                        min="0"
-                                        onChange={this.handleWeight}
-                                        className="from-to-input"
-                                    />
-                                    <Button
-                                        size="large"
-                                        type="primary"
-                                        htmlType="submit"
-                                        className="main1-confirm-button">
-                                        Confirm
-                                    </Button>
-                                </div>
-                            </PageHeader>
-                        </Menu>
+                        <OrderDetails collectMarker={this.markerCallback} cb={this.goToNextPage}/>
                     </Sider>
 
                 </Layout>
@@ -158,8 +99,9 @@ const Main1 = withRouter( Form.create({ name: 'main1' })(Main1StartingForm));
 
 export default connect(
     //state
-    ({distributionLocationReducer}) => ({
-       locations: distributionLocationReducer.locations
+    ({distributionLocationReducer, orderReducer}) => ({
+       locations: distributionLocationReducer.locations,
+        markers: orderReducer.markers,
     }),
 
     //action

@@ -1,13 +1,20 @@
-const orderReducer = (state = {startingLoc: "", destination: "", weight: 0.0, price: 0.0, distance: 0.0, usageTime: 0.0}, action) => {
+const orderReducer = (state = {startingLoc: "", destination: "", weight: 0.0, price: 0.0, distance: 0.0, usageTime: 0.0, markers:[]}, action) => {
     if (action.type === 'setStartLoc') {
         return {
             ...state,
-            startingLoc: action.startingLoc,
+            startingLoc: action.startingLoc.startingLoc,
+            markers: action.startingLoc.markers
         }
     } else if (action.type === 'setDestination') {
         return {
             ...state,
-            destination: action.destination,
+            destination: action.destination.destination,
+            markers: action.destination.markers
+        }
+    } else if (action.type === 'setWeight') {
+        return {
+            ...state,
+            weight: action.weight,
         }
     } else if (action.type === 'setBoth') {
         return {
@@ -32,6 +39,11 @@ const orderReducer = (state = {startingLoc: "", destination: "", weight: 0.0, pr
         return {
             ...state,
             usageTime: action.usageTime
+        }
+    } else if (action.type === 'setMarkers') {
+        return {
+            ...state,
+            markers: action.markers
         }
     }
     return state;
