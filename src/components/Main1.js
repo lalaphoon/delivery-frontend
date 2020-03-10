@@ -68,15 +68,7 @@ class Main1StartingForm extends React.Component {
         this.checkAvailability();
     }
 
-    componentWillUnmount() {
-        const allScripts = document.getElementsByTagName( 'script' );
-        [].filter.call(
-            allScripts,
-            ( scpt ) => scpt.src.indexOf( 'key=AIzaSyCQd2_s804T25-Xtvm5PndruimLb6pEuY4' ) >= 0
-        )[ 0 ].remove();
 
-        window.google = {};
-    }
 
     checkAvailability = () => {
         fetch(`${API_ROOT}/availability`, {
