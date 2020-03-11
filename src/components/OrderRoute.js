@@ -25,8 +25,8 @@ class OrderRouteForm extends React.Component {
                     <Descriptions.Item label="Usage Time">
                         {this.props.routeInfo && this.props.routeInfo.usage_time}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Status">
-                        <Badge status="processing" text="Running" />
+                    <Descriptions.Item label="total weight">
+                        {this.props.weight}
                     </Descriptions.Item>
                     <Descriptions.Item label="starting location">{this.props.startingLoc}</Descriptions.Item>
                     <Descriptions.Item label="ending location">{this.props.destination}</Descriptions.Item>
