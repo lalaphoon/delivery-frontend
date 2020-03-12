@@ -38,7 +38,7 @@ class Main2Form extends React.Component {
         const markers = this.props.userMarkers;
         for (var i = 0; i < markers.length; i++) {
             if (v === markers[i].label) {
-                return JSON.stringify({lat: markers[i].lat, lng: markers[i].lng});
+                return {lat: markers[i].lat, lng: markers[i].lng};
             }
 
         }
