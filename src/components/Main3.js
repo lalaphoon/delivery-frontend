@@ -16,6 +16,11 @@ class Main3Form extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
+            body: {
+                user_id : '1111',
+                order_id : this.props.orderID,
+                route_id: this.props.route_id
+            }
         }).then((response) => {
             if (response.ok) {
                 this.props.history.push('/confirmation');
@@ -51,6 +56,7 @@ class Main3Form extends React.Component {
                                     title="Main3"
                                 >
                                     <Descriptions bordered column={1} size="middle">
+                                        <Descriptions.Item label="Order ID">{this.props.orderID}</Descriptions.Item>
                                         <Descriptions.Item label="From">{this.props.startingLoc}</Descriptions.Item>
                                         <Descriptions.Item label="To">{this.props.destination}</Descriptions.Item>
                                         <Descriptions.Item label="Weight">{this.props.weight}</Descriptions.Item>
@@ -88,6 +94,7 @@ export default connect (
         price: orderReducer.price,
         usageTime: orderReducer.usageTime,
         deliverType: orderReducer.deliverType,
+        orderID: orderReducer.orderID,
         route: routeInfoReducer.route,
         route_id : routeInfoReducer.route_id,
         userMarkers: orderReducer.markers

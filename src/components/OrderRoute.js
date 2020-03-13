@@ -11,6 +11,7 @@ class OrderRouteForm extends React.Component {
             this.props.setPrice(this.props.routeInfo.price);
             this.props.setUsageTime(this.props.routeInfo.usage_time);
             this.props.setDeliverType(this.props.routeInfo.deliver_type);
+            this.props.setOrderID(this.props.orderID);
         }
 
         this.props.handleNextBottonCallback();
@@ -64,6 +65,9 @@ export default connect(
         },
         setDeliverType(type) {
             dispatch({'type' : 'setDeliverType', 'deliverType' : type})
+        },
+        setOrderID(id) {
+            dispatch({'type' : 'setOrderID', 'orderID' : id})
         }
     })
 )(OrderRoute);

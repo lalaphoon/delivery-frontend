@@ -121,7 +121,7 @@ class Main2Form extends React.Component {
                             <Map userMarkers={this.props.userMarkers} routes={this.getRoutes()}/>
                         </Content>
                         <Sider width={'45%'} style={{ background: '#fff' }}>
-                            <OrderRoute routeInfo={this.getRouteInfoById()}  handleNextBottonCallback={this.goToNextPage}/>
+                            <OrderRoute orderID={this.state.order_id} routeInfo={this.getRouteInfoById()}  handleNextBottonCallback={this.goToNextPage}/>
                         </Sider>
                     </Layout>
                 </Content>

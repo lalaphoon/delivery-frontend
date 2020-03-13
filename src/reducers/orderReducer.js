@@ -1,4 +1,4 @@
-const orderReducer = (state = {startingLoc: "", destination: "", weight: 0.0, deliverType: "", price: 0.0, distance: 0.0, usageTime: 0.0, markers:[]}, action) => {
+const orderReducer = (state = {startingLoc: "", destination: "", weight: 0.0, deliverType: "", orderID: "" , price: 0.0, distance: 0.0, usageTime: 0.0, markers:[]}, action) => {
     if (action.type === 'setStartLoc') {
         return {
             ...state,
@@ -49,6 +49,11 @@ const orderReducer = (state = {startingLoc: "", destination: "", weight: 0.0, de
         return {
             ...state,
             deliverType: action.deliverType
+        }
+    } else if (action.type === 'setOrderID') {
+        return {
+            ...state,
+            orderID : action.orderID
         }
     }
     return state;

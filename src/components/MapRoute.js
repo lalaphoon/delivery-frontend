@@ -21,13 +21,13 @@ class MapRoute extends React.Component {
         // }
         //return color;
         if (this.props.index === 0) {
-            return  '#ffff00'
+            return  '#00ff00'
         } else if (this.props.index === 1) {
-            return '#00ff00'
+            return '#fc03f4'
         } else if (this.props.index === 2) {
             return '#00ffff'
         }
-        return '#fc03f4'
+        return '#ffff00'
     }
 
     handleClickEvent() {
