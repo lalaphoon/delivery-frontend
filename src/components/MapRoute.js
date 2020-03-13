@@ -10,6 +10,10 @@ class MapRoute extends React.Component {
 
     //generate randomized color
     getRandomColor() {
+
+        if (this.props.route_id === this.props.id) {
+            return '#000000'
+        }
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
