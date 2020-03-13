@@ -10,6 +10,7 @@ class OrderRouteForm extends React.Component {
             this.props.setDistance(this.props.routeInfo.distance);
             this.props.setPrice(this.props.routeInfo.price);
             this.props.setUsageTime(this.props.routeInfo.usage_time);
+            this.props.setDeliverType(this.props.routeInfo.deliver_type);
         }
 
         this.props.handleNextBottonCallback();
@@ -61,6 +62,9 @@ export default connect(
         setUsageTime(locs) {
             dispatch({'type' : 'setUsageTime', 'usageTime' : locs})
         },
+        setDeliverType(type) {
+            dispatch({'type' : 'setDeliverType', 'deliverType' : type})
+        }
     })
 )(OrderRoute);
 

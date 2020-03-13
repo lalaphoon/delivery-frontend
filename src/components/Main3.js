@@ -55,10 +55,10 @@ class Main3Form extends React.Component {
                                         <Descriptions.Item label="To">{this.props.destination}</Descriptions.Item>
                                         <Descriptions.Item label="Weight">{this.props.weight}</Descriptions.Item>
                                         <Descriptions.Item label="Distance">{this.props.distance}</Descriptions.Item>
-                                        <Descriptions.Item label="By">Robot</Descriptions.Item>
+                                        <Descriptions.Item label="By">{this.props.deliverType}</Descriptions.Item>
                                         <Descriptions.Item label="Time Required">{this.props.usageTime}</Descriptions.Item>
                                         <Descriptions.Item label="Tel.">415-234-5678</Descriptions.Item>
-                                        <Descriptions.Item label="Price">$80.00</Descriptions.Item>
+                                        <Descriptions.Item label="Price">{this.props.price}</Descriptions.Item>
                                     </Descriptions>
                                     <Button type="primary" htmlType="submit" className="confirm-button" onClick={this.handleConfirmButtonClick}>
                                         Confirm
@@ -67,7 +67,7 @@ class Main3Form extends React.Component {
                             </Menu>
                         </Sider>
                         <Content style={{padding: '0 24px', minHeight: 500}}>
-                            <Map routes={this.convertRouteArray()}/>
+                            <Map userMarkers={this.props.userMarkers} routes={this.convertRouteArray()}/>
                         </Content>
                     </Layout>
                 </Content>
@@ -87,8 +87,10 @@ export default connect (
         distance: orderReducer.distance,
         price: orderReducer.price,
         usageTime: orderReducer.usageTime,
+        deliverType: orderReducer.deliverType,
         route: routeInfoReducer.route,
-        route_id : routeInfoReducer.route_id
+        route_id : routeInfoReducer.route_id,
+        userMarkers: orderReducer.userMarkers
     }),
 
     (dispatch) => ({

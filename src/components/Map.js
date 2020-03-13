@@ -18,10 +18,11 @@ class MapFunc extends React.Component {
                 defaultCenter={{lat: 37.7749, lng: -122.4194}}>
                 {
                     this.props.locations ?
-                    this.props.locations.map((ds) => (
+                    this.props.locations.map((ds, index) => (
                         <MapDistriStatMarker
                             locationInfo = {ds}
-                            key={ds.station_id}
+                            //key={ds.station_id}
+                            key={index}
                         />
                     )) : null
                 }
@@ -39,11 +40,12 @@ class MapFunc extends React.Component {
                     //route : array of {route_id, route}
 
                     this.props.routes ?
-                        this.props.routes.map((route) => (
+                        this.props.routes.map((route, index) => (
                         <MapRoute
                             route = {route.route}
                             id={route.route_id}
-                            key={route.route_id}
+                            index = {index}
+                            key={index}
                         />
                     )) : null
 

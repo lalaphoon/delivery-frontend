@@ -12,14 +12,22 @@ class MapRoute extends React.Component {
     getRandomColor() {
 
         if (this.props.route_id === this.props.id) {
-            return '#000000'
+            return '#fc0303'
         }
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+        // var letters = '0123456789ABCDEF';
+        // var color = '#';
+        // for (var i = 0; i < 6; i++) {
+        //     color += letters[Math.floor(Math.random() * 16)];
+        // }
+        //return color;
+        if (this.props.index === 0) {
+            return  '#ffff00'
+        } else if (this.props.index === 1) {
+            return '#00ff00'
+        } else if (this.props.index === 2) {
+            return '#00ffff'
         }
-        return color;
+        return '#fc03f4'
     }
 
     handleClickEvent() {
