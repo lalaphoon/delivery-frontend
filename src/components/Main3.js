@@ -90,7 +90,7 @@ export default connect (
         deliverType: orderReducer.deliverType,
         route: routeInfoReducer.route,
         route_id : routeInfoReducer.route_id,
-        userMarkers: orderReducer.userMarkers
+        userMarkers: orderReducer.markers
     }),
 
     (dispatch) => ({

@@ -12,7 +12,7 @@ class MapRoute extends React.Component {
     getRandomColor() {
 
         if (this.props.route_id === this.props.id) {
-            return '#fc0303'
+            return '#000000'
         }
         // var letters = '0123456789ABCDEF';
         // var color = '#';
