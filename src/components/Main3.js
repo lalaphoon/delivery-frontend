@@ -16,16 +16,18 @@ class Main3Form extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 user_id : '1111',
                 order_id : this.props.orderID,
                 route_id: this.props.route_id
-            }
+            })
         }).then((response) => {
             if (response.ok) {
-                this.props.history.push('/confirmation');
+                return response.json();
             }
-           // return response.json();
+        }).then((data) => {
+            console.log(data);
+            this.props.history.push('/confirmation');
         }).catch((error) => {
 
         });
@@ -57,6 +59,7 @@ class Main3Form extends React.Component {
                                 >
                                     <Descriptions bordered column={1} size="middle">
                                         <Descriptions.Item label="Order ID">{this.props.orderID}</Descriptions.Item>
+                                        <Descriptions.Item label="Route ID">{this.props.route_id}</Descriptions.Item>
                                         <Descriptions.Item label="From">{this.props.startingLoc}</Descriptions.Item>
                                         <Descriptions.Item label="To">{this.props.destination}</Descriptions.Item>
                                         <Descriptions.Item label="Weight">{this.props.weight}</Descriptions.Item>
